@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Your Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+      color: white;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      padding: 10px 0;
+      box-sizing: border-box;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 16px;
+    }
+
+    .navbar-center {
+      display: inline-block;
+    }
+
+    .content {
+      margin-top: 100px;
+    }
+
+    .login-form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .login-form input[type=text] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .login-form input[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .login-form input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="navbar-center">
+    <a href="#">CIMS</a>
+  </div>
+</div>
+
+<div class="content">
+  <div class="login-form">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="error-message" id="errorMessage"></div>
+      <label for="matricule">Matricule:</label>
+      <input type="text" id="matricule" name="matricule" required>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</div>
+<script src="authentification.js"></script>
+
+
+</body>
+</html>

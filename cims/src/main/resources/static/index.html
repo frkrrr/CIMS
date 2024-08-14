@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+            box-sizing: border-box;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
+            float: left;
+        }
+
+        .navbar a.right {
+            float: right;
+        }
+
+        .navbar-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .content {
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        table {
+            width: 70%;
+            margin: 0 auto 20px;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .add-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .add-button:hover {
+            background-color: #45a049;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .card h3 {
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2px 16px;
+        }
+
+        .modal-footer {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+            text-align: center;
+        }
+
+        .modal-body input[type=text], .modal-body input[type=number], .modal-body input[type=file] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .modal-body input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal-body input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .card-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .card-table, .card-table th, .card-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .card-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#" class="left" id="user-name"></a>
+    <a href="#" class="right" id="disconnect">Disconnect</a>
+    <div class="navbar-center">
+        <a href="#">CIMS</a>
+    </div>
+</div>
+
+<div class="content">
+    <h2>Mes enfants</h2>
+    <table id="enfants-table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Age</th>
+            <th>Classe</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Dynamic rows will be inserted here -->
+        </tbody>
+    </table>
+    <button class="add-button" onclick="openForm()">Ajouter enfant</button>
+
+    <!-- Cards for Rentrée Scolaire and Journée de la Science -->
+    <div class="card-container">
+        <div class="card" data-card="rente-scolaire" onclick="openCardModal('rente-scolaire')">
+            <h3>Rentrée Scolaire</h3>
+        </div>
+        <div class="card" data-card="journee-science" onclick="openCardModal('journee-science')">
+            <h3>Journée de la Science</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for card details -->
+<div id="cardModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="closeCardModal()">&times;</span>
+            <h2 id="modalTitle">Card Details</h2>
+        </div>
+        <div class="modal-body">
+            <table id="cardTable" class="card-table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Bulletin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Dynamic rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button id="confirmButton" onclick="confirmAction()">Confirmer</button>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="closeForm()">&times;</span>
+            <h2>Ajouter enfant</h2>
+        </div>
+        <div class="modal-body">
+            <form id="addEnfantForm">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" required><br>
+                <label for="prenom">Prénom:</label>
+                <input type="text" id="prenom" name="prenom" required><br>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required><br>
+                <label for="classe">Classe:</label>
+                <input type="text" id="classe" name="classe" required><br><br>
+                <input type="submit" value="Ajouter">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <h3>Form Footer</h3>
+        </div>
+    </div>
+</div>
+
+
+<script src="index.js"></script>
+
+</body>
+</html>
