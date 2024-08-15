@@ -51,7 +51,7 @@ document.getElementById("addEnfantForm").addEventListener("submit", function(eve
     const formData = new FormData(this);
     formData.append('matricule', localStorage.getItem('matricule'));
 
-    fetch('/api/enfants', {
+    fetch('/api/enfants/employees/${matricule}/enfants', {
         method: 'POST',
         body: formData
     })
@@ -88,7 +88,7 @@ window.onclick = function(event) {
     }
 }
 function fetchChildren(matricule) {
-    fetch(`http://localhost:8080/api/enfants?matricule=${user.matricule}`)
+    fetch(`http://localhost:8080/api/enfants/by-employee?matricule=${matricule}`) // use the passed matricule
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById("enfants-table").getElementsByTagName('tbody')[0];
@@ -99,10 +99,12 @@ function fetchChildren(matricule) {
             });
         })
         .catch(error => {
+
             console.error('Error fetching children:', error);
             alert('An error occurred. Please try again.');
         });
 }
+
 
 window.onload = function() {
     const user = JSON.parse(localStorage.getItem('user'));
